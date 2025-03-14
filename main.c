@@ -10,7 +10,7 @@
  */
 
 /* To Do: 반환 타입이 int이고 이름이 value이고, 매개변수가 int 타입 하나인 함수를 선언해보세요 */
-
+int value(int number);
 int main() {
 	return value(5);
 }
