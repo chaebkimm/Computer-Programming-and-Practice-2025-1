@@ -13,8 +13,9 @@
 */
 
 /* To Do: 타입이 int고 이름이 x인 전역변수를 선언하고, 초기값을 1로 정해보세요 */
+int x = 1;
 
 int main() {
 	/* To Do: 반환값을 x로 바꿔보세요 */ 
-	return 0;
+	return x;
 }
