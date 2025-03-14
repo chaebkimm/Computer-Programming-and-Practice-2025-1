@@ -16,5 +16,5 @@ int five() {
 
 int main() {
 	/* To Do: five()를 호출한 결과를 반환해보세요 */
-	return 0;
+	return five();
 }
