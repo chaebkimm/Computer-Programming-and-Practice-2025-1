@@ -8,7 +8,7 @@
  */
 
 int i = 0xaabbccdd;
-int pi; /* To Do: pi의 타입을 int 포인터 타입으로 바꾸고 초기값을 i의 주소로 설정해보세요 */
+int *pi = &i; /* To Do: pi의 타입을 int 포인터 타입으로 바꾸고 초기값을 i의 주소로 설정해보세요 */
 
 int main() {
   return 0;
