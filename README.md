@@ -1,2 +1,5 @@
-# Computer Programming and Practice 2025-1
- 컴퓨터 프로그래밍 및 실습 과목의 수업 홈페이지
+# PNG 파일 만들기
+
+# 변경사항: 
+# fopen_s가 visual studio 외의 환경에서 에러를 발생시켜 fopen으로 복구했습니다. 
+# visual studio의 sln 파일에서 
