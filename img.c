@@ -7,13 +7,10 @@ static unsigned int pos = 0;
 static unsigned int buffer_size = 0;
 
 int make_png_from_cifar_100() {
-    FILE* cifar;
-    errno_t error;
-    error = fopen_s(&cifar, "./cifar-100-binary./train.bin", "rb");
+    FILE* cifar = fopen("./cifar-100-binary./train.bin", "rb");
 
     if (!cifar) return 1;
 
-    printf("%d", error);
     unsigned char c;
 
     c = fgetc(cifar);
@@ -104,6 +101,8 @@ void pixel(int red, int green, int blue) {
     rgbs[0] = red & 0xff;
     rgbs[1] = green & 0xff;
     rgbs[2] = blue & 0xff;
+
+    printf("pixel... red: %02x, green: %02x, blue: %02x\n", rgbs[0], rgbs[1], rgbs[2]);
 
     png_save("test.png", 1, 1, rgbs);
 }

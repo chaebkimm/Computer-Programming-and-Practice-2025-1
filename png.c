@@ -37,10 +37,10 @@ static void png_write_int(const unsigned int data) {
 }
 
 static void png_open(const char* filename, unsigned int png_width, unsigned png_height) {
-	errno_t error = fopen_s(&img, filename, "wb");
+	img = fopen(filename, "wb");
 
-	if (error) {
-		printf("File open error: error code %d", error);
+	if (!img) {
+		printf("File open error");
 		exit(1);
 	}
 
@@ -135,9 +135,16 @@ static void png_data(const unsigned char* rgbs) {
 	}
 
 	const unsigned char FLG = (FLEVEL << 6) | (FDICT << 5) | (FCHECK & 0x1f);
+
+
 	data_offset = encode_char(data, data_offset, FLG);
 
+	printf("\nhuffman_static_lines\n");
+
 	data_offset += huffman_static_lines(rgbs, width, height, data + data_offset);
+
+	printf("\nget_crc\n");
+
 
 	unsigned long crc = get_crc(type, 4, 0);
 	crc = get_crc(data, data_offset, crc);
@@ -159,10 +166,33 @@ static void png_end() {
 }
 
 extern int png_save(const char* filename, unsigned int png_width, unsigned png_height, const unsigned char* rgbs) {
+	printf("\n\npng_open\n\n");
 	png_open(filename, png_width, png_height);
+
+	printf("\n\npng_header\n\n");
 	png_header();
+
+	printf("\n\npng_data\n\n");
 	png_data(rgbs);
+
+	printf("\n\npng_end\n\n");
 	png_end();
+
 	fclose(img);
-	return 1;
+
+	img = fopen(filename, "rb");
+	
+	int c, col = 0;
+	while ( (c = fgetc(img)) != EOF) {
+		printf("%02x ", (unsigned char) c);
+		if ( ++col == 16 ) {
+			printf("\n");
+			col = 0;
+		}
+	}
+	printf("\n");
+	
+	fclose(img);
+
+	return 0;
 }

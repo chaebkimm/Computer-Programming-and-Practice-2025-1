@@ -25,7 +25,7 @@ unsigned int huffman_codes(unsigned int lit_value) {
 unsigned int append_bit(unsigned char bit) {
     printf("%d", bit);
 
-    buf[index] = buf[index] & (~(1 << bit_pos)) | (bit << bit_pos);
+    buf[index] = (buf[index] & (~(1 << bit_pos))) | (bit << bit_pos);
 
     bits_total++;
     bit_pos = bits_total % 8;
@@ -94,7 +94,7 @@ unsigned long get_adler_from_lines(const unsigned char* rgbs, int width, int hei
         }
     }
 
-    printf("\nadler: %x %d %d", (s2 << 16) + s1, width, height);
+    printf("\nadler: %lx %d %d", (s2 << 16) + s1, width, height);
 
     return (s2 << 16) + s1;
 }
@@ -103,13 +103,20 @@ unsigned int huffman_static_lines(const unsigned char* rgbs, int width, int heig
 
     buf = huff_codes;
 
+    printf("\n**BFINAL**\n");
+
     unsigned char bfinal = 1;
     append_bit(bfinal);
 
+    printf("\n**BTYPE**\n");
     unsigned char btype = 1;
     append_bits(btype, 2);
 
+    printf("\n**IMG\n");
+
     for (int y = 0; y < height; y++) {
+
+	printf("\n**row:%d, FILTERTYPE**\n", y);
 
         append_bits_reverse(huffman_codes(0), huffman_bits(0));
 
@@ -137,7 +144,8 @@ unsigned int huffman_static_lines(const unsigned char* rgbs, int width, int heig
     if (bits_total % 8) exit(2);
 
     unsigned long adler = get_adler_from_lines(rgbs, width, height);
-    printf("\nadler: %x\nadler & 0xffffffff: %x\n(unsigned int)(adler & 0xffffffff) : %x\n", adler, adler & 0xffffffff, (unsigned int)(adler & 0xffffffff));
+
+    printf("\nadler: %lx\nadler & 0xffffffff: %lx\n(unsigned int)(adler & 0xffffffff) : %x\n", adler, adler & 0xffffffff, (unsigned int)(adler & 0xffffffff));
 
     append_bits_int((unsigned int)(adler & 0xffffffff));
 
