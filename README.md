@@ -16,5 +16,6 @@ int main() {
   return 0;
 }
 ```
+`int _getch();`의 [레퍼런스](https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/getch-getwch?view=msvc-170)
 
 ## 1. 콘솔에서 키보드 하나 입력받기 (Windows MSYS2)
