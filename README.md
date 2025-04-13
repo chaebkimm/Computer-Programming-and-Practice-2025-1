@@ -103,12 +103,12 @@ cygwin의 sys/termios.h 파일의 코드, 의미는 posix의 `terminos` 구조�
 > #define ISIG	0x0001   /* ISIG는 Ctrl+C 입력으로 프로그램을 종료하는 신호를 보내는 등의 특별 제어 문자 확인을 가능하게 해준다. */
 > #define ICANON	0x0002 /* ICANON은 콘솔에서 엔터를 눌렀을 때 프로그램을 키보드 입력들을 전송하게 한다. */
 > #define ECHO	0x0004   /* ECHO는 입력받은 키를 그대로 화면에 출력하게 한다. */
-> #define ECHOE	0x0008   /* ECHOE는 백스페이스를 입력했을 때 화면에서도 문자를 지운다. */
-> #define ECHOK	0x0010   /* Ctrl_U 입력으로 한 줄을 모두 지우는 것을 허용한다. */
-> #define ECHONL	0x0020 /* ECHO가 없을 때도, 엔터키 입력으로 줄을 바꾸는 것을 허용한다 */
-> #define NOFLSH	0x0040 /* Ctrl+C를 해도 프로그램으로 전송하지 않은 키보드 입력들을 보존한다 */
-> #define TOSTOP	0x0080 /* 백그라운드 프로세스가 화면에 출력하는 것을 방지한다 */
-> #define IEXTEN	0x0100 /* 고급 입력 기능을 허용한다 */
+> #define ECHOE	0x0008   /* ECHOE는 백스페이스를 입력했을 때 화면에서도 문자를 지운다. ICANON이 설정되어 있을 때 작동한다. */
+> #define ECHOK	0x0010   /* Ctrl_U 입력으로 한 줄을 모두 지우는 것을 허용한다. ICANON이 설정되어 있을 때 작동한다. */
+> #define ECHONL	0x0020 /* ECHO가 없을 때도, 엔터키 입력으로 줄을 바꾸는 것을 허용한다. ICANON이 설정되어 있을 때 작동한다. */
+> #define NOFLSH	0x0040 /* Ctrl+C를 해도 프로그램으로 전송하지 않은 키보드 입력들을 보존한다. */
+> #define TOSTOP	0x0080 /* 백그라운드 프로세스가 화면에 출력하는 것을 방지한다. */
+> #define IEXTEN	0x0100 /* 고급 입력 기능을 허용한다. */
 > #define FLUSHO	0x0200 /* posix의 확장판인 XSI에서 쓰인다. 모든 출력을 버린다. 옛날 glibc에서 쓰던 _BSD_SOURCE가 정의되어 있을 때 작동한다. */
 > #define ECHOKE	0x0400 /* posix의 확장판인 XSI에서 쓰인다. 한 줄을 지울 때 한글자씩 지운다. 옛날 glibc에서 쓰던 _BSD_SOURCE가 정의되어 있을 때 작동한다. */
 > #define ECHOCTL	0x0800 /* posix의 확장판인 XSI에서 쓰인다. 특수문자를 ^X 꼴로 표시한다. 옛날 glibc에서 쓰던 _BSD_SOURCE가 정의되어 있을 때 작동한다. */
