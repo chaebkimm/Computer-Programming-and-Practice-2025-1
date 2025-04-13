@@ -35,11 +35,23 @@ int main() {
    return 0;
 }
 ```
+posix의 `int fileno(FILE* stream);` [레퍼런스](https://pubs.opengroup.org/onlinepubs/9799919799/functions/fileno.html)
+
 
 2) 터미널에서 termios.h 헤더 파일이 있는지 체크하기
 ```bash
 cygcheck -p "sys/termios.h"
 ```
-헤더 파일이 있으면  cygwin-devel-버전 - cygwin-devel: Core development files가 출력됨
+헤더 파일이 있으면, cygwin-devel-버전 - cygwin-devel: Core development files가 출력됨
 
-3) 
+cygwin의 sys/termios.h 파일 [github](https://github.com/openunix/cygwin/blob/master/winsup/cygwin/include/sys/termios.h)
+
+
+3) 터미널 셋팅 출력해서 확인하기
+```c
+#include <stdio.h>
+#include <sys/termios.h>
+
+int main() {
+   struct termios terminal_setting;
+   
