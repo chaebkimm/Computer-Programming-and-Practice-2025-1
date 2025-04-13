@@ -30,9 +30,9 @@ int main() {
 #include <stdio.h>
 
 int main() {
-   int stdin_fileno = fileno(stdin);
-   printf("stdin_fileno : %d \n", stdin_fileno); /* 정상적인 경우 0이 출력됨 */
-   return 0;
+  int stdin_fileno = fileno(stdin);
+  printf("stdin_fileno : %d \n", stdin_fileno); /* 정상적인 경우 0이 출력됨 */
+  return 0;
 }
 ```
 posix의 `int fileno(FILE* stream);` [레퍼런스](https://pubs.opengroup.org/onlinepubs/9799919799/functions/fileno.html)
@@ -47,11 +47,53 @@ cygcheck -p "sys/termios.h"
 cygwin의 sys/termios.h 파일 [github](https://github.com/openunix/cygwin/blob/master/winsup/cygwin/include/sys/termios.h)
 
 
-3) 터미널 셋팅 출력해서 확인하기
+**3) 터미널 셋팅을 가져오는 데에 문제가 없는지 확인하기**
 ```c
 #include <stdio.h>
 #include <sys/termios.h>
 
 int main() {
-   struct termios terminal_setting;
    
+  int stdin_fileno = fileno(stdin);
+  struct termios terminal_setting;
+
+  int error_no = tcgetattr(stdin_fileno, &terminal_setting);
+  if (error_no) {
+    printf("Error: tcgetattr, error_no is %d.\n", error_no);
+    return 1;
+  }
+  else {
+    printf("tcgetattr ... OK.\n");
+  }
+
+  return 0;
+}
+```
+
+posix의 `int tcgetattr(int fildes, struct termios *termios_p);` [레퍼런스](https://pubs.opengroup.org/onlinepubs/9799919799/functions/tcgetattr.html#)
+
+
+**4) 터미널 셋팅값 확인하기**
+```c
+#include <stdio.h>
+#include <sys/termios.h>
+
+int main() {
+   
+  int stdin_fileno = fileno(stdin);
+  struct termios terminal_setting;
+
+  int error_no = tcgetattr(stdin_fileno, &terminal_setting);
+  if (error_no) {
+    printf("Error: tcgetattr, error_no is %d.\n", error_no);
+    return 1;
+  }
+  else {
+    printf("tcgetattr ... OK.\n");
+  }
+
+  return 0;
+}
+```
+
+posix의 `termios` 구조체 [레퍼런스](https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap11.html#tag_11_02_01)
