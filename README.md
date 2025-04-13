@@ -97,6 +97,7 @@ int main() {
   return 0;
 }
 ```
+
 cygwin의 sys/termios.h 파일의 코드, 의미는 posix의 `terminos` 구조체 [레퍼런스](https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap11.html#tag_11_02_01)에서 가져옴
 > ```c
 > /* lflag bits */
@@ -130,6 +131,7 @@ cygwin의 sys/termios.h 파일의 코드, 의미는 posix의 `terminos` 구조�
 테스트 결과 terminal_setting_local_mode: 0x0d1f가 출력되었다면, ECHOCTL, ECHOKE, IEXTEN, ECHOK, ECHOE, ECHO, ICANON, ISIG가 설정된 상태다. 
 
 posix의 `termios` 구조체 [레퍼런스](https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap11.html#tag_11_02_01)
+
 
 **5) 터미널 셋팅값 확인하기**
 ```c
@@ -183,3 +185,108 @@ cygwin의 sys/termios.h 파일의 코드, 의미는 posix의 `terminos` 구조�
 > 
 > #define NCCS     18
 > ```
+
+**6) 터미널 셋팅값 변경하기**
+```c
+#include <stdio.h>
+#include <sys/termios.h>
+
+int main() {
+   
+  int stdin_fileno = fileno(stdin);
+  struct termios terminal_setting;
+
+  int error_no = tcgetattr(stdin_fileno, &terminal_setting);
+  if (error_no) {
+    printf("Error: tcgetattr, error_no is %d.\n", error_no);
+    return 1;
+  }
+  printf("tcgetattr ... OK.\n");
+
+  printf("terminal_setting_local_mode: 0x%04x.\n", terminal_setting.c_lflag);
+
+  printf("terminal_setting_non_canonical_mode MIN value: $d.\n", terminal_setting.c_cc[VMIN]);
+
+  printf("terminal_setting_non_canonical_mode TIME value: $d.\n", terminal_setting.c_cc[VTIME]);
+
+  terminal_setting &= ~ICANON;
+
+  error_no = tcsetattr(stdin_fileno, TCSANOW, &terminal_setting);
+  if (error_no) {
+    printf("Error: tcsetattr, error_no is %d.\n", error_no);
+    return 1;
+  }
+
+  printf("tcsetattr ... OK.\n");
+
+  return 0;
+}
+```
+테스트 결과 tcsetattr ... OK.이 출력되었다면, 로컬 모두 세팅에서 일반적인 경우(Canonical mode) 여부를 나타내는 비트가 0으로 설정된 것으로, 문자 하나씩 입력이 가능해진 것이다. 
+
+posix의 `int tcsetattr(int fildes, int optional_actions, const struct termios *termios_p);` [레퍼런스](https://pubs.opengroup.org/onlinepubs/9799919799/functions/tcsetattr.html#)
+
+**7) 터미널에서 키보드 입력을 받아보기**
+```c
+#include <stdio.h>
+#include <sys/termios.h>
+
+int main() {
+   
+  int stdin_fileno = fileno(stdin);
+  struct termios terminal_setting;
+
+  int error_no = tcgetattr(stdin_fileno, &terminal_setting);
+  unsigned char ch_input;
+
+  if (error_no) {
+    printf("Error: tcgetattr, error_no is %d.\n", error_no);
+    return 1;
+  }
+  printf("tcgetattr ... OK.\n");
+
+  printf("terminal_setting_local_mode: 0x%04x.\n", terminal_setting.c_lflag);
+
+  printf("terminal_setting_non_canonical_mode MIN value: $d.\n", terminal_setting.c_cc[VMIN]);
+
+  printf("terminal_setting_non_canonical_mode TIME value: $d.\n", terminal_setting.c_cc[VTIME]);
+
+  terminal_setting &= ~ICANON;
+
+  error_no = tcsetattr(stdin_fileno, TCSANOW, &terminal_setting);
+  if (error_no) {
+    printf("Error: tcsetattr, error_no is %d.\n", error_no);
+    return 1;
+  }
+
+  printf("tcsetattr ... OK.\n");
+
+  do {
+    scanf("%c", &ch_input);
+    printf("\ninput character is : %c. \n", ch_input);
+  while(ch_input != 'q');
+
+  return 0;
+}
+```
+실행 결과
+```
+tcgetattr ... OK.
+terminal_setting_local_mode: 0x0d1d.
+terminal_setting_non_canonical_mode MIN value: 1.
+terminal_setting_non_canonical_mode TIME value: 0.
+tcsetattr ... OK.
+a
+input character is : a.
+b
+input character is : b.
+c
+input character is : c.
+d
+input character is : d.
+e
+input character is : e.
+f
+input character is : f.
+```
+
