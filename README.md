@@ -485,3 +485,7 @@ int main() {
 }
 ```
 실행결과는 8)과 동일
+
+테스트 환경:
+
+* MSYS2 MSYS (gcc), Mintty 터미널
