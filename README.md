@@ -263,7 +263,7 @@ int main() {
 
   do {
     scanf("%c", &ch_input);
-    printf("\ninput character is : %c. \n", ch_input);
+    printf("\nint value of input character is : %d. \n", ch_input);
   while(ch_input != 'q');
 
   return 0;
@@ -277,16 +277,31 @@ terminal_setting_non_canonical_mode MIN value: 1.
 terminal_setting_non_canonical_mode TIME value: 0.
 tcsetattr ... OK.
 a
-input character is : a.
-b
-input character is : b.
-c
-input character is : c.
-d
-input character is : d.
-e
-input character is : e.
-f
-input character is : f.
+int value of input character is : 97.
+z
+int value of input character is : 122.
+0
+int value of input character is : 48.
+9
+int value of input character is : 57.
+A
+int value of input character is : 65.
+Z
+int value of input character is : 90.
+탭키
+int value of input character is : 9.
+엔터키
+
+int value of input character is : 10.
+왼쪽화살표키
+int value of input character is : 27.
+
+int value of input character is : 91.
+
+int value of input character is : 68.
+ESC키
+nt value of input character is : 27.
+q
+int value of input character is : 113.
 ```
 
