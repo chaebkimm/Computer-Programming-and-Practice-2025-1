@@ -239,7 +239,7 @@ int main() {
   struct termios terminal_setting;
 
   int error_no = tcgetattr(stdin_fileno, &terminal_setting);
-  unsigned char ch_input;
+  unsigned char ch_input; /* 키보드 입력을 저장할 문자 변수 */
 
   if (error_no) {
     printf("Error: tcgetattr, error_no is %d.\n", error_no);
@@ -308,3 +308,84 @@ q
 int value of input character is : 113.
 ```
 
+
+**8) 터미널에서 키보드 입력을 받아보기 - 에코를 끄기**
+```c
+#include <stdio.h>
+#include <sys/termios.h>
+
+int main() {
+   
+  int stdin_fileno = fileno(stdin);
+  struct termios terminal_setting;
+
+  int error_no = tcgetattr(stdin_fileno, &terminal_setting);
+  unsigned char ch_input;
+
+  if (error_no) {
+    printf("Error: tcgetattr, error_no is %d.\n", error_no);
+    return 1;
+  }
+  printf("tcgetattr ... OK.\n");
+
+  printf("terminal_setting_local_mode: 0x%04x.\n", terminal_setting.c_lflag);
+
+  printf("terminal_setting_non_canonical_mode MIN value: $d.\n", terminal_setting.c_cc[VMIN]);
+
+  printf("terminal_setting_non_canonical_mode TIME value: $d.\n", terminal_setting.c_cc[VTIME]);
+
+  terminal_setting &= ~ICANON;
+
+  terminal_setting &= ~ECHO; /* 에코에 해당하는 비트를 0으로 만든다. */
+
+  error_no = tcsetattr(stdin_fileno, TCSANOW, &terminal_setting);
+  if (error_no) {
+    printf("Error: tcsetattr, error_no is %d.\n", error_no);
+    return 1;
+  }
+
+  printf("tcsetattr ... OK.\n");
+
+  do {
+    scanf("%c", &ch_input);
+    printf("\nint value of input character is : %d. \n", ch_input);
+  while(ch_input != 'q');
+
+  return 0;
+}
+```
+실행 결과
+```
+tcgetattr ... OK.
+terminal_setting_local_mode: 0x0d1d.
+terminal_setting_non_canonical_mode MIN value: 1.
+terminal_setting_non_canonical_mode TIME value: 0.
+tcsetattr ... OK.
+a키
+int value of input character is : 97.
+A키
+int value of input character is : 122.
+0키
+int value of input character is : 48.
+9키
+int value of input character is : 57.
+A키
+int value of input character is : 65.
+Z키
+int value of input character is : 90.
+탭키
+int value of input character is : 9.
+엔터키
+int value of input character is : 10.
+왼쪽화살표키
+int value of input character is : 27.
+
+int value of input character is : 91.
+
+int value of input character is : 68.
+ESC키
+int value of input character is : 27.
+q키
+int value of input character is : 113.
+
+```
