@@ -115,4 +115,5 @@ cygwin의 sys/termios.h 파일의 코드, 의미는 posix의 `terminos` 구조�
 > ```
 
 테스트 결과 terminal_setting_local_mode: 0x0d1f가 출력되었다면, ECHOCTL, ECHOKE, IEXTEN, ECHOK, ECHOE, ECHO, ICANON, ISIG가 설정된 상태다. 
+
 posix의 `termios` 구조체 [레퍼런스](https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap11.html#tag_11_02_01)
