@@ -390,7 +390,7 @@ int value of input character is : 113.
 
 ```
 
-**8) 터미널에서 키보드 키 입력 하나를 받는 함수 만들기**
+**9) 터미널에서 키보드 키 입력 하나를 받는 함수 만들기**
 ```c
 #include <stdio.h>
 #include <sys/termios.h>
@@ -484,4 +484,4 @@ int main() {
   return 0;
 }
 ```
-실행결과는 7)과 동일
+실행결과는 8)과 동일
