@@ -75,7 +75,7 @@ int main() {
 posix의 `int tcgetattr(int fildes, struct termios *termios_p);` [레퍼런스](https://pubs.opengroup.org/onlinepubs/9799919799/functions/tcgetattr.html#)
 
 
-**4) 터미널 셋팅값 확인하기**
+**4) 터미널 셋팅값 확인하기 - 로컬모드**
 ```c
 #include <stdio.h>
 #include <sys/termios.h>
@@ -112,8 +112,74 @@ cygwin의 sys/termios.h 파일의 코드, 의미는 posix의 `terminos` 구조�
 > #define FLUSHO	0x0200 /* posix의 확장판인 XSI에서 쓰인다. 모든 출력을 버린다. 옛날 glibc에서 쓰던 _BSD_SOURCE가 정의되어 있을 때 작동한다. */
 > #define ECHOKE	0x0400 /* posix의 확장판인 XSI에서 쓰인다. 한 줄을 지울 때 한글자씩 지운다. 옛날 glibc에서 쓰던 _BSD_SOURCE가 정의되어 있을 때 작동한다. */
 > #define ECHOCTL	0x0800 /* posix의 확장판인 XSI에서 쓰인다. 특수문자를 ^X 꼴로 표시한다. 옛날 glibc에서 쓰던 _BSD_SOURCE가 정의되어 있을 때 작동한다. */
+>
+> struct termios
+> {
+>  tcflag_t	c_iflag;
+>  tcflag_t	c_oflag;
+>  tcflag_t	c_cflag;
+>  tcflag_t	c_lflag;
+>  char		c_line;
+>  cc_t		c_cc[NCCS];
+>  speed_t	c_ispeed;
+>  speed_t	c_ospeed;
+> };
+>
 > ```
 
 테스트 결과 terminal_setting_local_mode: 0x0d1f가 출력되었다면, ECHOCTL, ECHOKE, IEXTEN, ECHOK, ECHOE, ECHO, ICANON, ISIG가 설정된 상태다. 
 
 posix의 `termios` 구조체 [레퍼런스](https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap11.html#tag_11_02_01)
+
+**5) 터미널 셋팅값 확인하기**
+```c
+#include <stdio.h>
+#include <sys/termios.h>
+
+int main() {
+   
+  int stdin_fileno = fileno(stdin);
+  struct termios terminal_setting;
+
+  int error_no = tcgetattr(stdin_fileno, &terminal_setting);
+  if (error_no) {
+    printf("Error: tcgetattr, error_no is %d.\n", error_no);
+    return 1;
+  }
+  printf("tcgetattr ... OK.\n");
+
+  printf("terminal_setting_local_mode: 0x%04x.\n", terminal_setting.c_lflag);
+
+  printf("terminal_setting_non_canonical_mode MIN value: $d.\n", terminal_setting.c_cc[VMIN]);
+
+  printf("terminal_setting_non_canonical_mode TIME value: $d.\n", terminal_setting.c_cc[VTIME]);
+
+  return 0;
+}
+```
+테스트 결과 terminal_setting_non_canonical_mode MIN value: 1.이 출력되었다면, 1바이트씩 stdin에 전달한다는 뜻이다. 
+
+또한, terminal_setting_non_canonical_mode TIME value: 0.이 출력되었다면, 키보드 입력을 무한정 기다린다는 뜻이다.
+
+cygwin의 sys/termios.h 파일의 코드, 의미는 posix의 `terminos` 구조체 [레퍼런스](https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap11.html#tag_11_02_06)에서 가져옴
+> ```c
+> #define VDISCARD	1
+> #define VEOL		  2
+> #define VEOL2		  3
+> #define VEOF		  4
+> #define VERASE		5
+> #define VINTR		  6
+> #define VKILL		  7
+> #define VLNEXT		8
+> #define VMIN		  9
+> #define VQUIT		 10
+> #define VREPRINT 11
+> #define VSTART	 12
+> #define VSTOP		 13
+> #define VSUSP		 14
+> #define VSWTC		 15
+> #define VTIME		 16
+> #define VWERASE	 17
+> 
+> #define NCCS		 18
+> ```
