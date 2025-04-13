@@ -57,7 +57,8 @@ int main() {
   int stdin_fileno = fileno(stdin);
   struct termios terminal_setting;
 
-  int error_no = tcgetattr(stdin_fileno, &terminal_setting);
+  int error_no = tcgetattr(stdin_fileno, &terminal_setting); /* 터미널 셋팅을 terminal_setting에 저장한다. */
+  /* 터미널 셋팅을 가져올 때 에러가 있었는지 확인한다 */
   if (error_no) {
     printf("Error: tcgetattr, error_no is %d.\n", error_no);
     return 1;
@@ -92,7 +93,7 @@ int main() {
   }
   printf("tcgetattr ... OK.\n");
 
-  printf("terminal_setting_local_mode: 0x%04x.\n", terminal_setting.c_lflag);
+  printf("terminal_setting_local_mode: 0x%04x.\n", terminal_setting.c_lflag); /* 터미널 셋팅 중 로컬 모드 관련 값 (int 타입)을 출력한다. */
 
   return 0;
 }
@@ -152,9 +153,9 @@ int main() {
 
   printf("terminal_setting_local_mode: 0x%04x.\n", terminal_setting.c_lflag);
 
-  printf("terminal_setting_non_canonical_mode MIN value: $d.\n", terminal_setting.c_cc[VMIN]);
+  printf("terminal_setting_non_canonical_mode MIN value: $d.\n", terminal_setting.c_cc[VMIN]); /* 터미널 셋팅 값 중 일반 모드가 아닐 때 몇바이트씩 입력을 받을지에 대한 값을 출력한다. */
 
-  printf("terminal_setting_non_canonical_mode TIME value: $d.\n", terminal_setting.c_cc[VTIME]);
+  printf("terminal_setting_non_canonical_mode TIME value: $d.\n", terminal_setting.c_cc[VTIME]); /* 터미널 셋팅 값 중 일반 모드가 아닐 때 얼마나 오래 입력을 기다릴지를 0.1초 단위로 출력한다. */
 
   return 0;
 }
@@ -209,15 +210,16 @@ int main() {
 
   printf("terminal_setting_non_canonical_mode TIME value: $d.\n", terminal_setting.c_cc[VTIME]);
 
-  terminal_setting &= ~ICANON;
+  terminal_setting.c_lflag &= ~ICANON; /* 터미널 셋팅 정보 중 로컬 모드에서 일반 입력 모드 여부를 나타내는 비트를 0으로 설정한다. */ 
 
+  /* 변경된 터미널 셋팅 정보로 터미널 설정을 당장 변경한다. */
   error_no = tcsetattr(stdin_fileno, TCSANOW, &terminal_setting);
   if (error_no) {
     printf("Error: tcsetattr, error_no is %d.\n", error_no);
     return 1;
   }
 
-  printf("tcsetattr ... OK.\n");
+  printf("tcsetattr ... OK.\n"); /* 터미널 설정 변경시 에러가 없을 경우 출력된다. */
 
   return 0;
 }
@@ -261,6 +263,7 @@ int main() {
 
   printf("tcsetattr ... OK.\n");
 
+  /* 키보드 입력을 받고, 해당 정수 값을 출력한다. */
   do {
     scanf("%c", &ch_input);
     printf("\nint value of input character is : %d. \n", ch_input);
