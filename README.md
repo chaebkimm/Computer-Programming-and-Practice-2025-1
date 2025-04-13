@@ -25,7 +25,7 @@ int main() {
 * MSYS2 MINGW64 (mingw-w64-x86_64-gcc), Mintty 터미널
 
 ## 1. 콘솔에서 키보드 하나 입력받기 (Windows Cygwin)
-1) stdio.h 헤더 파일에 fileno 함수가 있고, stdin의 파일 번호가 정상적으로 출력되는지 체크하기
+**1) stdio.h 헤더 파일에 fileno 함수가 있고, stdin의 파일 번호가 정상적으로 출력되는지 체크하기**
 ```c
 #include <stdio.h>
 
@@ -38,7 +38,7 @@ int main() {
 posix의 `int fileno(FILE* stream);` [레퍼런스](https://pubs.opengroup.org/onlinepubs/9799919799/functions/fileno.html)
 
 
-2) 터미널에서 termios.h 헤더 파일이 있는지 체크하기
+**2) 터미널에서 termios.h 헤더 파일이 있는지 체크하기**
 ```bash
 cygcheck -p "sys/termios.h"
 ```
