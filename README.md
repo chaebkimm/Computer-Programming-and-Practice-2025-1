@@ -159,9 +159,9 @@ int main() {
 
   printf("terminal_setting_local_mode: 0x%04x.\n", terminal_setting.c_lflag);
 
-  printf("terminal_setting_non_canonical_mode MIN value: %d.\n", terminal_setting.c_cc[VMIN]); /* 터미널 셋팅 값 중 일반 모드가 아닐 때 몇바이트씩 입력을 받을지에 대한 값을 출력한다. */
+  printf("terminal_setting_non_canonical_mode MIN value: $d.\n", terminal_setting.c_cc[VMIN]); /* 터미널 셋팅 값 중 일반 모드가 아닐 때 몇바이트씩 입력을 받을지에 대한 값을 출력한다. */
 
-  printf("terminal_setting_non_canonical_mode TIME value: %d.\n", terminal_setting.c_cc[VTIME]); /* 터미널 셋팅 값 중 일반 모드가 아닐 때 얼마나 오래 입력을 기다릴지를 0.1초 단위로 출력한다. */
+  printf("terminal_setting_non_canonical_mode TIME value: $d.\n", terminal_setting.c_cc[VTIME]); /* 터미널 셋팅 값 중 일반 모드가 아닐 때 얼마나 오래 입력을 기다릴지를 0.1초 단위로 출력한다. */
 
   return 0;
 }
@@ -212,9 +212,9 @@ int main() {
 
   printf("terminal_setting_local_mode: 0x%04x.\n", terminal_setting.c_lflag);
 
-  printf("terminal_setting_non_canonical_mode MIN value: %d.\n", terminal_setting.c_cc[VMIN]);
+  printf("terminal_setting_non_canonical_mode MIN value: $d.\n", terminal_setting.c_cc[VMIN]);
 
-  printf("terminal_setting_non_canonical_mode TIME value: %d.\n", terminal_setting.c_cc[VTIME]);
+  printf("terminal_setting_non_canonical_mode TIME value: $d.\n", terminal_setting.c_cc[VTIME]);
 
   terminal_setting.c_lflag &= ~ICANON; /* 터미널 셋팅 정보 중 로컬 모드에서 일반 입력 모드 여부를 나타내는 비트를 0으로 설정한다. */ 
 
@@ -255,9 +255,9 @@ int main() {
 
   printf("terminal_setting_local_mode: 0x%04x.\n", terminal_setting.c_lflag);
 
-  printf("terminal_setting_non_canonical_mode MIN value: %d.\n", terminal_setting.c_cc[VMIN]);
+  printf("terminal_setting_non_canonical_mode MIN value: $d.\n", terminal_setting.c_cc[VMIN]);
 
-  printf("terminal_setting_non_canonical_mode TIME value: %d.\n", terminal_setting.c_cc[VTIME]);
+  printf("terminal_setting_non_canonical_mode TIME value: $d.\n", terminal_setting.c_cc[VTIME]);
 
   terminal_setting &= ~ICANON;
 
@@ -336,9 +336,9 @@ int main() {
 
   printf("terminal_setting_local_mode: 0x%04x.\n", terminal_setting.c_lflag);
 
-  printf("terminal_setting_non_canonical_mode MIN value: %d.\n", terminal_setting.c_cc[VMIN]);
+  printf("terminal_setting_non_canonical_mode MIN value: $d.\n", terminal_setting.c_cc[VMIN]);
 
-  printf("terminal_setting_non_canonical_mode TIME value: %d.\n", terminal_setting.c_cc[VTIME]);
+  printf("terminal_setting_non_canonical_mode TIME value: $d.\n", terminal_setting.c_cc[VTIME]);
 
   terminal_setting &= ~ICANON;
 
@@ -414,9 +414,9 @@ int get_terminal_setting(struct termios *pointer_to_setting) {
 
   printf("terminal_setting_local_mode: 0x%04x.\n", pointer_to_setting->c_lflag);
 
-  printf("terminal_setting_non_canonical_mode MIN value: %d.\n", pointer_to_setting->c_cc[VMIN]);
+  printf("terminal_setting_non_canonical_mode MIN value: $d.\n", pointer_to_setting->c_cc[VMIN]);
 
-  printf("terminal_setting_non_canonical_mode TIME value: %d.\n", pointer_to_setting->c_cc[VTIME]);
+  printf("terminal_setting_non_canonical_mode TIME value: $d.\n", pointer_to_setting->c_cc[VTIME]);
 
   return 0;
 }  
@@ -456,4 +456,179 @@ int restore_terminal() {
   struct termios terminal_setting;
   int error_no = get_terminal_setting(&terminal_setting);
 
-  if (erro로 실행
+  if (error_no) return 1;
+
+  terminal_setting.c_lflag |= ICANON;
+  terminal_setting.c_lflag |= ECHO;
+
+  error_no = set_terminal_setting(&terminal_setting);
+
+  if (error_no) return 1;
+  else return 0;
+}
+
+/* 키보드 입력을 한바이트 받아서 unsigned char로 반환하는 함수. 주의: 어떤 키는 여러 바이트가 입력됨. */
+unsigned char get_byte() {
+  unsigned char ch_input;
+  scanf("%c", &ch_input);
+  return ch_input;
+}
+
+/* setup_terminal과 get_byte 테스트 */
+int main() {
+  unsigned char ch_input; /* 키보드 입력에서 한 바이트씩 읽어서 저장할 변수 */
+
+  setup_terminal();     
+
+  do {
+    ch_input = get_byte();
+    printf("\nint value of input character is : %d. \n", ch_input);
+  } while(ch_input != 'q');
+
+  restore_terminal();
+  
+  return 0;
+}
+```
+실행결과는 8)과 동일
+
+테스트 환경:
+
+* GCC, MSYS2 MSYS에서 설치됨 (gcc), MSYS2의 터미널 (Mintty)
+* ~~GCC, MSYS2 MSYS에서 설치됨 (gcc), VSCode에서 tasks.json을 변경해서 실행한 같은 창에서의 PowerShell 터미널~~
+* GCC, MSYS2 MSYS에서 설치됨 (gcc), VSCode에서 tasks.json을 변경해서 실행한 새로운 창에서의 MSYS2 터미널
+
+## 1. 콘솔에서 키보드 하나 입력받기 (Linux. C 라이브러리 사용 환경: glibc)
+**터미널에서 키보드 키 입력 하나를 받는 함수 만들기**
+```c
+#include <stdio.h>
+#include <termios.h>
+
+/* 터미널 셋팅을 읽어서 저장하는 함수 */
+int get_terminal_setting(struct termios *pointer_to_setting) {
+  int stdin_fileno = fileno(stdin);
+  int error_no = tcgetattr(stdin_fileno, pointer_to_setting);
+
+  if (error_no) {
+    printf("Error: tcgetattr, error_no is %d.\n", error_no);
+    return 1;
+  }
+  printf("tcgetattr ... OK.\n");
+
+  printf("terminal_setting_local_mode: 0x%04x.\n", pointer_to_setting->c_lflag);
+
+  printf("terminal_setting_non_canonical_mode MIN value: $d.\n", pointer_to_setting->c_cc[VMIN]);
+
+  printf("terminal_setting_non_canonical_mode TIME value: $d.\n", pointer_to_setting->c_cc[VTIME]);
+
+  return 0;
+}  
+
+/* 입력받은 셋팅값으로 터미널 셋팅을 업데이트하는 함수 */
+int set_terminal_setting(struct termios *pointer_to_setting) {
+  int stdin_fileno = fileno(stdin);
+  int error_no = tcsetattr(stdin_fileno, TCSANOW, pointer_to_setting);
+  if (error_no) {
+    printf("Error: tcsetattr, error_no is %d.\n", error_no);
+    return 1;
+  }
+
+  printf("tcsetattr ... OK.\n");
+
+  return 0;
+}  
+
+/* 터미널에서 키보드 입력을 한바이트씩 에코 없이 받게 설정값을 바꾸는 함수 */
+int setup_terminal() {
+  struct termios terminal_setting;
+  int error_no = get_terminal_setting(&terminal_setting);
+
+  if (error_no) return 1;
+
+  terminal_setting.c_lflag &= ~ICANON;
+  terminal_setting.c_lflag &= ~ECHO;
+
+  error_no = set_terminal_setting(&terminal_setting);
+
+  if (error_no) return 1;
+  else return 0;
+}
+
+/* 터미널에서 키보드 입력을 원래대로 받고, 에코도 다시 설정하는 함수 */
+int restore_terminal() {
+  struct termios terminal_setting;
+  int error_no = get_terminal_setting(&terminal_setting);
+
+  if (error_no) return 1;
+
+  terminal_setting.c_lflag |= ICANON;
+  terminal_setting.c_lflag |= ECHO;
+
+  error_no = set_terminal_setting(&terminal_setting);
+
+  if (error_no) return 1;
+  else return 0;
+}
+
+/* 키보드 입력을 한바이트 받아서 unsigned char로 반환하는 함수. 주의: 어떤 키는 여러 바이트가 입력됨. */
+unsigned char get_byte() {
+  unsigned char ch_input;
+  scanf("%c", &ch_input);
+  return ch_input;
+}
+
+/* setup_terminal과 get_byte 테스트 */
+int main() {
+  unsigned char ch_input; /* 키보드 입력에서 한 바이트씩 읽어서 저장할 변수 */
+
+  setup_terminal();     
+
+  do {
+    ch_input = get_byte();
+    printf("\nint value of input character is : %d. \n", ch_input);
+  } while(ch_input != 'q');
+
+  restore_terminal();
+  
+  return 0;
+}
+```
+실행 결과
+```
+tcgetattr ... OK.
+terminal_setting_local_mode: 0x0d1d.
+terminal_setting_non_canonical_mode MIN value: 1.
+terminal_setting_non_canonical_mode TIME value: 0.
+tcsetattr ... OK.
+a키
+int value of input character is : 97.
+A키
+int value of input character is : 122.
+0키
+int value of input character is : 48.
+9키
+int value of input character is : 57.
+A키
+int value of input character is : 65.
+Z키
+int value of input character is : 90.
+탭키
+int value of input character is : 9.
+엔터키
+int value of input character is : 10.
+왼쪽화살표키
+int value of input character is : 27.
+
+int value of input character is : 91.
+
+int value of input character is : 68.
+ESC키
+int value of input character is : 27.
+q키
+int value of input character is : 113.
+
+```
+테스트 환경:
+
+* GCC, WSL Ubuntu (gcc), VSCode에서 실행
+* GCC, WSL Ubuntu (gcc), 명령어로 실행
