@@ -26,6 +26,9 @@ int main() {
 * GCC, MSYS2 UCRT64에서 설치됨 (mingw-w64-ucrt-x86_64-gcc), Command Prompt에서 시작한 VSCode의 터미널 (mingw-w64-ucrt-x86_64-toolchain 설치됨)
 * GCC, MSYS2 MINGW64에서 설치됨 (mingw-w64-x86_64-gcc), MSYS2의 터미널 (Mintty)
 * GCC, MSYS2 MINGW64에서 설치됨 (mingw-w64-x86_64-gcc), Command Prompt에서 시작한 VSCode의 터미널 (mingw-w64-x86_64-toolchain 설치됨)
+* CLANG, MSYS2 CLANG64에서 설치됨 (mingw-w64-clang-x86_64-gcc), MSYS2의 터미널 (Mintty)
+* CLANG, MSYS2 CLANG64에서 설치됨 (mingw-w64-clang-x86_64-gcc), VSCode에서 tasks.json을 변경해서 실행한 같은 창에서의 PowerShell 터미널
+* CLANG, MSYS2 CLANG64에서 설치됨 (mingw-w64-clang-x86_64-gcc), VSCode에서 tasks.json을 변경해서 실행한 새로운 창에서의 MSYS2 터미널
 
 ## 1. 콘솔에서 키보드 하나 입력받기 (Windows. C 라이브러리 사용 환경: Cygwin)
 **1) stdio.h 헤더 파일에 fileno 함수가 있고, stdin의 파일 번호가 정상적으로 출력되는지 체크하기**
