@@ -504,7 +504,7 @@ int main() {
 #include <stdio.h>
 #include <termios.h>
 
-/* 터미널 셋팅을 읽어서 저장하는 함수 */
+/* read setting values of terminal. save to the structure pointed by pointer_to_setting */
 int get_terminal_setting(struct termios *pointer_to_setting) {
   int stdin_fileno = fileno(stdin);
   int error_no = tcgetattr(stdin_fileno, pointer_to_setting);
@@ -524,7 +524,7 @@ int get_terminal_setting(struct termios *pointer_to_setting) {
   return 0;
 }  
 
-/* 입력받은 셋팅값으로 터미널 셋팅을 업데이트하는 함수 */
+/* update terminal setting from the values saved in the structure pointed by pointer_to_setting */
 int set_terminal_setting(struct termios *pointer_to_setting) {
   int stdin_fileno = fileno(stdin);
   int error_no = tcsetattr(stdin_fileno, TCSANOW, pointer_to_setting);
@@ -538,7 +538,7 @@ int set_terminal_setting(struct termios *pointer_to_setting) {
   return 0;
 }  
 
-/* 터미널에서 키보드 입력을 한바이트씩 에코 없이 받게 설정값을 바꾸는 함수 */
+/* update terminal setting to get keyboard input byte by byte without echo */
 int setup_terminal() {
   struct termios terminal_setting;
   int error_no = get_terminal_setting(&terminal_setting);
@@ -554,7 +554,7 @@ int setup_terminal() {
   else return 0;
 }
 
-/* 터미널에서 키보드 입력을 원래대로 받고, 에코도 다시 설정하는 함수 */
+/* restore original terminal setting, which gets keyboard input after enter and echo is on */
 int restore_terminal() {
   struct termios terminal_setting;
   int error_no = get_terminal_setting(&terminal_setting);
@@ -570,14 +570,14 @@ int restore_terminal() {
   else return 0;
 }
 
-/* 키보드 입력을 한바이트 받아서 unsigned char로 반환하는 함수. 주의: 어떤 키는 여러 바이트가 입력됨. */
+/* get one byte from keyboard input and returns unsigned char. Caution: Some key results in multiple bytes */
 unsigned char get_byte() {
   unsigned char ch_input;
   scanf("%c", &ch_input);
   return ch_input;
 }
 
-/* setup_terminal과 get_byte 테스트 */
+/* test setup_terminal() and get_byte() */
 int main() {
   unsigned char ch_input; /* 키보드 입력에서 한 바이트씩 읽어서 저장할 변수 */
 
