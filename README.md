@@ -159,9 +159,9 @@ int main() {
 
   printf("terminal_setting_local_mode: 0x%04x.\n", terminal_setting.c_lflag);
 
-  printf("terminal_setting_non_canonical_mode MIN value: $d.\n", terminal_setting.c_cc[VMIN]); /* 터미널 셋팅 값 중 일반 모드가 아닐 때 몇바이트씩 입력을 받을지에 대한 값을 출력한다. */
+  printf("terminal_setting_non_canonical_mode MIN value: %d.\n", terminal_setting.c_cc[VMIN]); /* 터미널 셋팅 값 중 일반 모드가 아닐 때 몇바이트씩 입력을 받을지에 대한 값을 출력한다. */
 
-  printf("terminal_setting_non_canonical_mode TIME value: $d.\n", terminal_setting.c_cc[VTIME]); /* 터미널 셋팅 값 중 일반 모드가 아닐 때 얼마나 오래 입력을 기다릴지를 0.1초 단위로 출력한다. */
+  printf("terminal_setting_non_canonical_mode TIME value: %d.\n", terminal_setting.c_cc[VTIME]); /* 터미널 셋팅 값 중 일반 모드가 아닐 때 얼마나 오래 입력을 기다릴지를 0.1초 단위로 출력한다. */
 
   return 0;
 }
@@ -212,9 +212,9 @@ int main() {
 
   printf("terminal_setting_local_mode: 0x%04x.\n", terminal_setting.c_lflag);
 
-  printf("terminal_setting_non_canonical_mode MIN value: $d.\n", terminal_setting.c_cc[VMIN]);
+  printf("terminal_setting_non_canonical_mode MIN value: %d.\n", terminal_setting.c_cc[VMIN]);
 
-  printf("terminal_setting_non_canonical_mode TIME value: $d.\n", terminal_setting.c_cc[VTIME]);
+  printf("terminal_setting_non_canonical_mode TIME value: %d.\n", terminal_setting.c_cc[VTIME]);
 
   terminal_setting.c_lflag &= ~ICANON; /* 터미널 셋팅 정보 중 로컬 모드에서 일반 입력 모드 여부를 나타내는 비트를 0으로 설정한다. */ 
 
@@ -255,9 +255,9 @@ int main() {
 
   printf("terminal_setting_local_mode: 0x%04x.\n", terminal_setting.c_lflag);
 
-  printf("terminal_setting_non_canonical_mode MIN value: $d.\n", terminal_setting.c_cc[VMIN]);
+  printf("terminal_setting_non_canonical_mode MIN value: %d.\n", terminal_setting.c_cc[VMIN]);
 
-  printf("terminal_setting_non_canonical_mode TIME value: $d.\n", terminal_setting.c_cc[VTIME]);
+  printf("terminal_setting_non_canonical_mode TIME value: %d.\n", terminal_setting.c_cc[VTIME]);
 
   terminal_setting &= ~ICANON;
 
@@ -336,9 +336,9 @@ int main() {
 
   printf("terminal_setting_local_mode: 0x%04x.\n", terminal_setting.c_lflag);
 
-  printf("terminal_setting_non_canonical_mode MIN value: $d.\n", terminal_setting.c_cc[VMIN]);
+  printf("terminal_setting_non_canonical_mode MIN value: %d.\n", terminal_setting.c_cc[VMIN]);
 
-  printf("terminal_setting_non_canonical_mode TIME value: $d.\n", terminal_setting.c_cc[VTIME]);
+  printf("terminal_setting_non_canonical_mode TIME value: %d.\n", terminal_setting.c_cc[VTIME]);
 
   terminal_setting &= ~ICANON;
 
@@ -414,9 +414,9 @@ int get_terminal_setting(struct termios *pointer_to_setting) {
 
   printf("terminal_setting_local_mode: 0x%04x.\n", pointer_to_setting->c_lflag);
 
-  printf("terminal_setting_non_canonical_mode MIN value: $d.\n", pointer_to_setting->c_cc[VMIN]);
+  printf("terminal_setting_non_canonical_mode MIN value: %d.\n", pointer_to_setting->c_cc[VMIN]);
 
-  printf("terminal_setting_non_canonical_mode TIME value: $d.\n", pointer_to_setting->c_cc[VTIME]);
+  printf("terminal_setting_non_canonical_mode TIME value: %d.\n", pointer_to_setting->c_cc[VTIME]);
 
   return 0;
 }  
@@ -517,9 +517,9 @@ int get_terminal_setting(struct termios *pointer_to_setting) {
 
   printf("terminal_setting_local_mode: 0x%04x.\n", pointer_to_setting->c_lflag);
 
-  printf("terminal_setting_non_canonical_mode MIN value: $d.\n", pointer_to_setting->c_cc[VMIN]);
+  printf("terminal_setting_non_canonical_mode MIN value: %d.\n", pointer_to_setting->c_cc[VMIN]);
 
-  printf("terminal_setting_non_canonical_mode TIME value: $d.\n", pointer_to_setting->c_cc[VTIME]);
+  printf("terminal_setting_non_canonical_mode TIME value: %d.\n", pointer_to_setting->c_cc[VTIME]);
 
   return 0;
 }  
