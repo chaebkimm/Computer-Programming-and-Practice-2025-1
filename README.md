@@ -633,3 +633,142 @@ int value of input character is : 113.
 * GCC, WSL Ubuntu, VSCode에서 실행
 * GCC, WSL Ubuntu, 명령어로 실행
 * GCC, Redhat (VMware), 명령어로 실행
+
+
+## 1. 콘솔에서 키보드 하나 입력받기 (macOS. C 라이브러리 사용 환경: libSystem)
+**터미널에서 키보드 키 입력 하나를 받는 함수 만들기**
+```c
+#include <stdio.h>
+#include <termios.h>
+
+/* read setting values of terminal. save to the structure pointed by pointer_to_setting */
+int get_terminal_setting(struct termios *pointer_to_setting) {
+  int stdin_fileno = fileno(stdin);
+  int error_no = tcgetattr(stdin_fileno, pointer_to_setting);
+
+  if (error_no) {
+    printf("Error: tcgetattr, error_no is %d.\n", error_no);
+    return 1;
+  }
+  printf("tcgetattr ... OK.\n");
+
+  printf("terminal_setting_local_mode: 0x%08lx.\n", pointer_to_setting->c_lflag);
+
+  printf("terminal_setting_non_canonical_mode MIN value: %d.\n", pointer_to_setting->c_cc[VMIN]);
+
+  printf("terminal_setting_non_canonical_mode TIME value: %d.\n", pointer_to_setting->c_cc[VTIME]);
+
+  return 0;
+}  
+
+/* update terminal setting from the values saved in the structure pointed by pointer_to_setting */
+int set_terminal_setting(struct termios *pointer_to_setting) {
+  int stdin_fileno = fileno(stdin);
+  int error_no = tcsetattr(stdin_fileno, TCSANOW, pointer_to_setting);
+  if (error_no) {
+    printf("Error: tcsetattr, error_no is %d.\n", error_no);
+    return 1;
+  }
+
+  printf("tcsetattr ... OK.\n");
+
+  return 0;
+}  
+
+/* update terminal setting to get keyboard input byte by byte without echo */
+int setup_terminal() {
+  struct termios terminal_setting;
+  int error_no = get_terminal_setting(&terminal_setting);
+
+  if (error_no) return 1;
+
+  terminal_setting.c_lflag &= ~ICANON;
+  terminal_setting.c_lflag &= ~ECHO;
+
+  error_no = set_terminal_setting(&terminal_setting);
+
+  if (error_no) return 1;
+  else return 0;
+}
+
+/* restore original terminal setting, which gets keyboard input after enter and echo is on */
+int restore_terminal() {
+  struct termios terminal_setting;
+  int error_no = get_terminal_setting(&terminal_setting);
+
+  if (error_no) return 1;
+
+  terminal_setting.c_lflag |= ICANON;
+  terminal_setting.c_lflag |= ECHO;
+
+  error_no = set_terminal_setting(&terminal_setting);
+
+  if (error_no) return 1;
+  else return 0;
+}
+
+/* get one byte from keyboard input and returns unsigned char. Caution: Some key results in multiple bytes */
+unsigned char get_byte() {
+  unsigned char ch_input;
+  scanf("%c", &ch_input);
+  return ch_input;
+}
+
+/* test setup_terminal() and get_byte() */
+int main() {
+  unsigned char ch_input; /* variable to hold input key value */
+
+  setup_terminal();     
+
+  do {
+    ch_input = get_byte();
+    printf("\nint value of input character is : %d. \n", ch_input);
+  } while(ch_input != 'q');
+
+  restore_terminal();
+  
+  return 0;
+}
+```
+실행 결과
+```
+tcgetattr ... OK.
+terminal_setting_local_mode: 0x200005cb.
+terminal_setting_non_canonical_mode MIN value: 1.
+terminal_setting_non_canonical_mode TIME value: 0.
+tcsetattr ... OK.
+a키
+int value of input character is : 97.
+z키
+int value of input character is : 122.
+0키
+int value of input character is : 48.
+9키
+int value of input character is : 57.
+A키
+int value of input character is : 65.
+Z키
+int value of input character is : 90.
+탭키
+int value of input character is : 9.
+엔터키
+int value of input character is : 10.
+왼쪽화살표키
+int value of input character is : 27.
+
+int value of input character is : 91.
+
+int value of input character is : 68.
+ESC키
+int value of input character is : 27.
+q키
+int value of input character is : 113.
+tcgetattr ... OK.
+terminal_setting_local_mode: 0x000004c3.
+terminal_setting_non_canonical_mode MIN value: 1.
+terminal_setting_non_canonical_mode TIME value: 0.
+tcsetattr ... OK.
+```
+테스트 환경:
+
+* clang, OS X Yosemite, 명령어로 실행
