@@ -20,7 +20,8 @@ int main() {
 
 테스트 환경:
 
-* Visual Studio 2022, 디버거 콘솔
+* MSVC, Visual Studio 2022 디버거 콘솔
+* MSVC, Developer Command Prompt for VS2022에서 시작한 VSCode의 터미널
 * MSYS2 UCRT64 (mingw-w64-ucrt-x86_64-gcc), Mintty 터미널
 * MSYS2 MINGW64 (mingw-w64-x86_64-gcc), Mintty 터미널
 
