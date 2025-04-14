@@ -494,4 +494,6 @@ int main() {
 
 테스트 환경:
 
-* MSYS2 MSYS (gcc), Mintty 터미널
+* GCC, MSYS2 MSYS에서 설치됨 (gcc), MSYS2의 터미널 (Mintty)
+* ~~GCC, MSYS2 MSYS에서 설치됨 (gcc), VSCode에서 tasks.json을 변경해서 실행한 같은 창에서의 PowerShell 터미널~~
+* GCC, MSYS2 MSYS에서 설치됨 (gcc), VSCode에서 tasks.json을 변경해서 실행한 새로운 창에서의 MSYS2 터미널
