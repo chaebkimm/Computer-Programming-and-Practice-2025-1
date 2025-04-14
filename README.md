@@ -579,7 +579,7 @@ unsigned char get_byte() {
 
 /* test setup_terminal() and get_byte() */
 int main() {
-  unsigned char ch_input; /* 키보드 입력에서 한 바이트씩 읽어서 저장할 변수 */
+  unsigned char ch_input; /* variable to hold input key value */
 
   setup_terminal();     
 
