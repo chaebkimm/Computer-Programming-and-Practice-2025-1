@@ -24,7 +24,7 @@ int main() {
 * MSVC, Developer Command Prompt for VS2022에서 시작한 VSCode의 터미널
 * GCC, MSYS2 UCRT64에서 설치됨 (mingw-w64-ucrt-x86_64-gcc), MSYS2의 터미널 (Mintty)
 * GCC, MSYS2 UCRT64에서 설치됨 (mingw-w64-ucrt-x86_64-gcc), Command Prompt에서 시작한 VSCode의 터미널
-* MSYS2 MINGW64 (mingw-w64-x86_64-gcc), Mintty 터미널
+* GCC, MSYS2 MINGW64에서 설치됨 (mingw-w64-x86_64-gcc), MSYS2의 터미널 (Mintty)
 
 ## 1. 콘솔에서 키보드 하나 입력받기 (Windows. C 라이브러리 사용 환경: Cygwin)
 **1) stdio.h 헤더 파일에 fileno 함수가 있고, stdin의 파일 번호가 정상적으로 출력되는지 체크하기**
