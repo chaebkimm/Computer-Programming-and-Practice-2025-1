@@ -22,7 +22,8 @@ int main() {
 
 * MSVC, Visual Studio 2022 디버거 콘솔
 * MSVC, Developer Command Prompt for VS2022에서 시작한 VSCode의 터미널
-* MSYS2 UCRT64 (mingw-w64-ucrt-x86_64-gcc), Mintty 터미널
+* GCC, MSYS2 UCRT64에서 설치됨 (mingw-w64-ucrt-x86_64-gcc), MSYS2의 터미널 (Mintty)
+* GCC, MSYS2 UCRT64에서 설치됨 (mingw-w64-ucrt-x86_64-gcc), Command Prompt에서 시작한 VSCode의 터미널
 * MSYS2 MINGW64 (mingw-w64-x86_64-gcc), Mintty 터미널
 
 ## 1. 콘솔에서 키보드 하나 입력받기 (Windows. C 라이브러리 사용 환경: Cygwin)
