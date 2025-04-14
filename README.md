@@ -630,5 +630,6 @@ int value of input character is : 113.
 ```
 테스트 환경:
 
-* GCC, WSL Ubuntu (gcc), VSCode에서 실행
-* GCC, WSL Ubuntu (gcc), 명령어로 실행
+* GCC, WSL Ubuntu, VSCode에서 실행
+* GCC, WSL Ubuntu, 명령어로 실행
+* GCC, Redhat (VMware), 명령어로 실행
