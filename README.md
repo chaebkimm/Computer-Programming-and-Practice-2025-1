@@ -596,13 +596,13 @@ int main() {
 실행 결과
 ```
 tcgetattr ... OK.
-terminal_setting_local_mode: 0x0d1d.
+terminal_setting_local_mode: 0x8a3b.
 terminal_setting_non_canonical_mode MIN value: 1.
 terminal_setting_non_canonical_mode TIME value: 0.
 tcsetattr ... OK.
 a키
 int value of input character is : 97.
-A키
+z키
 int value of input character is : 122.
 0키
 int value of input character is : 48.
@@ -626,6 +626,11 @@ ESC키
 int value of input character is : 27.
 q키
 int value of input character is : 113.
+tcgetattr ... OK.
+terminal_setting_local_mode: 0x8a31.
+terminal_setting_non_canonical_mode MIN value: 1.
+terminal_setting_non_canonical_mode TIME value: 0.
+tcsetattr ... OK.
 
 ```
 테스트 환경:
