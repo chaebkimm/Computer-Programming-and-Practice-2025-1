@@ -35,7 +35,7 @@ int main() {
 테스트 환경:
 
 * MSVC. Visual Studio 2022의 터미널 (Developer Command Prompt)
-* CLANG, MSYS2 CLANG64에서 mingw-w64-clang-x86_64-gcc로 설치, clang 소스파일이름 -o 실행파일이름으로 컴파일 및 실행. MSYS2의 터미널 (Mintty)
+* CLANG, MSYS2 CLANG64에서 mingw-w64-clang-x86_64-gcc로 설치, `clang 소스파일이름 -o 실행파일이름` 명령어로 컴파일 및 실행. MSYS2의 터미널 (Mintty)
 
 실행 결과
 ```
