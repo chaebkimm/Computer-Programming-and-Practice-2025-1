@@ -57,9 +57,11 @@ int main() {
 
 테스트 환경:
 
-* MSVC, Developer Command Prompt for VS2022에서 시작한 VSCode의 터미널
-* GCC, MSYS2 UCRT64에서 설치됨 (mingw-w64-ucrt-x86_64-gcc), MSYS2의 터미널 (Mintty)
-* GCC, MSYS2 UCRT64에서 설치됨 (mingw-w64-ucrt-x86_64-gcc), Command Prompt에서 시작한 VSCode의 터미널 (mingw-w64-ucrt-x86_64-toolchain 설치됨)
+* MSVC. VSCode에서 C/C++ Extension 설치, 소스 파일을 열고, 실행 버튼 오른쪽에 있는
+  설정 버튼을 클릭해서 C/C++: cl.exe 선택. 실행 버튼을 클릭해서 실행. VSCode의 디폴트 터미널 (Powershell)
+* GCC, MSYS2 UCRT64에서 mingw-w64-ucrt-x86_64-gcc 설치, gcc 소스파일이름 -o 실행파일이름으로 컴파일 및 실행. MSYS2의 터미널 (Mintty)
+* GCC, MSYS2 UCRT64에서 base-devel과 mingw-w64-ucrt-x86_64-toolcahin 추가 설치. VSCode에서 소스 파일을 열고, 실행 버튼 오른쪽에 있는
+  설정 버튼을 클릭해서 C/C++: gcc.exe ... (compiler: C:/msys64/ucrt64/bin/gcc.exe) 선택. tasks.json의 command에서 확인. 소스 파일을 열고 실행 버튼을 클릭해서 실행. VSCode의 디폴트 터미널 (Powershell)
 * GCC, MSYS2 MINGW64에서 설치됨 (mingw-w64-x86_64-gcc), MSYS2의 터미널 (Mintty)
 * GCC, MSYS2 MINGW64에서 설치됨 (mingw-w64-x86_64-gcc), Command Prompt에서 시작한 VSCode의 터미널 (mingw-w64-x86_64-toolchain 설치됨)
 * CLANG, MSYS2 CLANG64에서 설치됨 (mingw-w64-clang-x86_64-gcc), VSCode에서 tasks.json을 변경해서 실행한 같은 창에서의 PowerShell 터미널
