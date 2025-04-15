@@ -16,19 +16,61 @@ int main() {
   return 0;
 }
 ```
-`int _getch();`의 [레퍼런스](https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/getch-getwch?view=msvc-170)
+실행 결과
+```
+0: [ 97, 0x61] 'a'                    /* a키를 입력했을 때 */
+1: [122, 0x7a] 'z'                    /* z키를 입력했을 때 */
+2: [ 48, 0x30] '0'                    /* 0키를 입력했을 때 */
+3: [ 57, 0x39] '9'                    /* 9키를 입력했을 때 */
+4: [ 65, 0x41] 'A'                    /* A키를 입력했을 때 */
+5: [ 90, 0x5a] 'Z'                    /* Z키를 입력했을 때 */
+6: [  9, 0x09] '        '             /* 탭키를 입력했을 때 */
+': [ 13, 0x0d] '                      /* 엔터키를 입력했을 때 */
+8: [224, 0xe0] '?                     /* 왼쪽 화살표키를 입력했을 때 */
+9: [ 75, 0x4b] 'K'
+10: [ 27, 0x1b] '                     /* Esc키를 입력했을 때 */
+1: [113, 0x71] 'q'                    /* q키를 입력했을 때 */
+```
 
 테스트 환경:
 
 * MSVC, Visual Studio 2022 디버거 콘솔
+* CLANG, MSYS2 CLANG64에서 설치됨 (mingw-w64-clang-x86_64-gcc), MSYS2의 터미널 (Mintty)
+* CLANG, MSYS2 CLANG64에서 설치됨 (mingw-w64-clang-x86_64-gcc), VSCode에서 tasks.json을 변경해서 실행한 새로운 창에서의 MSYS2 터미널
+
+실행 결과
+```
+0: [ 97, 0x61] 'a'                    /* a키를 입력했을 때 */
+1: [122, 0x7a] 'z'                    /* z키를 입력했을 때 */
+2: [ 48, 0x30] '0'                    /* 0키를 입력했을 때 */
+3: [ 57, 0x39] '9'                    /* 9키를 입력했을 때 */
+4: [ 65, 0x41] 'A'                    /* A키를 입력했을 때 */
+5: [ 90, 0x5a] 'Z'                    /* Z키를 입력했을 때 */
+6: [  9, 0x09] '        '             /* 탭키를 입력했을 때 */
+': [ 13, 0x0d] '                      /* 엔터키를 입력했을 때 */
+8: [224, 0xe0] '?                     /* 왼쪽 화살표키를 입력했을 때 */
+9: [ 75, 0x4b] 'K'
+10: [ 27, 0x1b] '                     /* Esc키를 입력했을 때 */
+
+1: [113, 0x71] 'q'                    /* q키를 입력했을 때 */
+```
+
+테스트 환경:
+
 * MSVC, Developer Command Prompt for VS2022에서 시작한 VSCode의 터미널
 * GCC, MSYS2 UCRT64에서 설치됨 (mingw-w64-ucrt-x86_64-gcc), MSYS2의 터미널 (Mintty)
 * GCC, MSYS2 UCRT64에서 설치됨 (mingw-w64-ucrt-x86_64-gcc), Command Prompt에서 시작한 VSCode의 터미널 (mingw-w64-ucrt-x86_64-toolchain 설치됨)
 * GCC, MSYS2 MINGW64에서 설치됨 (mingw-w64-x86_64-gcc), MSYS2의 터미널 (Mintty)
 * GCC, MSYS2 MINGW64에서 설치됨 (mingw-w64-x86_64-gcc), Command Prompt에서 시작한 VSCode의 터미널 (mingw-w64-x86_64-toolchain 설치됨)
-* CLANG, MSYS2 CLANG64에서 설치됨 (mingw-w64-clang-x86_64-gcc), MSYS2의 터미널 (Mintty)
 * CLANG, MSYS2 CLANG64에서 설치됨 (mingw-w64-clang-x86_64-gcc), VSCode에서 tasks.json을 변경해서 실행한 같은 창에서의 PowerShell 터미널
-* CLANG, MSYS2 CLANG64에서 설치됨 (mingw-w64-clang-x86_64-gcc), VSCode에서 tasks.json을 변경해서 실행한 새로운 창에서의 MSYS2 터미널
+
+참고 자료:
+
+`int _getch();`의 [레퍼런스](https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/getch-getwch?view=msvc-170)
+
+[MSYS2의 옵션별 C 라이브러리](https://stackoverflow.com/questions/76552264/what-are-msys2-environments-how-do-i-pick-one)를 정리한 글
+
+[UCRT와 MSVCRT의 차이점](https://stackoverflow.com/questions/67848972/differences-between-msvcrt-ucrt-and-vcruntime-libraries)을 정리한 글 
 
 ## 1. 콘솔에서 키보드 하나 입력받기 (Windows. C 라이브러리 사용 환경: Cygwin)
 **1) stdio.h 헤더 파일에 fileno 함수가 있고, stdin의 파일 번호가 정상적으로 출력되는지 체크하기**
