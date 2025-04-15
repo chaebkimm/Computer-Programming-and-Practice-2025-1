@@ -36,9 +36,6 @@ int main() {
 
 * MSVC. Visual Studio 2022의 터미널 (Developer Command Prompt)
 * CLANG, MSYS2 CLANG64에서 mingw-w64-clang-x86_64-gcc로 설치, clang 소스파일이름 -o 실행파일이름으로 컴파일 및 실행. MSYS2의 터미널 (Mintty)
-* CLANG, MSYS2 CLANG64에서 base-devel과 mingw-w64-clang-x86_64-toolchain, mingw-w64-clang-x86_64-lldb 추가 설치,
-  VSCode에서 CodeLLDB extension 설치, [CodeLLDB 매뉴얼](https://github.com/vadimcn/codelldb/blob/v1.11.4/MANUAL.md#starting-a-new-debug-session)
-  에 따라서 launch.json 만들기, VSCode의 Run and Debug 메뉴에서 실행. VSCode의 디폴트 터미널 (Powershell)
 
 실행 결과
 ```
@@ -67,6 +64,9 @@ int main() {
 * GCC, MSYS2 MINGW64에서 설치됨 (mingw-w64-x86_64-gcc), MSYS2의 터미널 (Mintty)
 * GCC, MSYS2 MINGW64에서 설치됨 (mingw-w64-x86_64-gcc), Command Prompt에서 시작한 VSCode의 터미널 (mingw-w64-x86_64-toolchain 설치됨)
 * CLANG, MSYS2 CLANG64에서 설치됨 (mingw-w64-clang-x86_64-gcc), VSCode에서 tasks.json을 변경해서 실행한 같은 창에서의 PowerShell 터미널
+* CLANG, MSYS2 CLANG64에서 base-devel과 mingw-w64-clang-x86_64-toolchain, mingw-w64-clang-x86_64-lldb 추가 설치,
+  VSCode에서 CodeLLDB extension 설치, [CodeLLDB 매뉴얼](https://github.com/vadimcn/codelldb/blob/v1.11.4/MANUAL.md#starting-a-new-debug-session)
+  에 따라서 launch.json 만들기, VSCode의 Run and Debug 메뉴에서 실행. VSCode의 디폴트 터미널 (Powershell)
 
 참고 자료:
 
