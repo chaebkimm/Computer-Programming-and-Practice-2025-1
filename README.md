@@ -1,4 +1,4 @@
-# 편집기 프로젝트
+# 키보드 입출력 프로젝트
 
 ## 1. 콘솔에서 키보드 하나 입력받기 (Windows. C 라이브러리 사용 환경: Universal C Runtime, Microsoft Visual C++ Runtime Library)
 ```c
